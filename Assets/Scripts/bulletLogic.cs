@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class bulletLogic : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class bulletLogic : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         Debug.Log(collider.name);
-        if (collider.tag == "Enemy")
+        if (collider.CompareTag("Enemy"))
         {
             var gO = collider.gameObject;
             gO.GetComponentInChildren<Animator>().enabled = false;
@@ -60,10 +61,15 @@ public class bulletLogic : MonoBehaviour
             
         }
 
-        if (collider.tag == "Player")
+        if (collider.CompareTag("Player"))
         {
-            Destroy(this.gameObject);
-            Destroy(collider.gameObject);
+            Debug.Log("Wow! you've killed");
+            GameStats.Current.lives--;
+            if (GameStats.Current.lives < 0)
+            {
+                GameStats.Current.lives = 5;
+            }
+            SceneManager.LoadSceneAsync("Scenes/SampleScene", LoadSceneMode.Single);
         }
         GetComponent<AudioSource>().enabled = true;
         GetComponent<AudioSource>().Play();

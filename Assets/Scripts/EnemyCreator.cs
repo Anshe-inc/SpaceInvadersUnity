@@ -1,10 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using Quaternion = UnityEngine.Quaternion;
-using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 public class EnemyCreator : MonoBehaviour

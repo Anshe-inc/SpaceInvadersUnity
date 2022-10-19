@@ -4,21 +4,40 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 public class GameStatsTrack : MonoBehaviour
 {
-    public Text text_ref;
+    [FormerlySerializedAs("text_ref")] public Text scoreTextRef;
     public Text hi_score;
     public Text lives;
-    protected GameStats _gameStats;
+    [SerializeField]
+    private GameStats _gameStats;
+
+    public static GameStatsTrack current = null;
 
     private void Awake()
     {
-        _gameStats = LoadStore.LoadStats();
+        if (current == null)
+        {
+            current = this;
+        }else if (current == this)
+
+        {
+            Destroy(gameObject);
+        }
+
+        _gameStats = (_gameStats == null) ? LoadStore.LoadStats() : GameStats.Current;
         hi_score.text = "" + _gameStats.hi_score;
         lives.text = String.Concat(Enumerable.Repeat("+", _gameStats.lives));
+        Debug.Log(hi_score);
+        Debug.Log(lives);
+        DontDestroyOnLoad(_gameStats);
+        
         //try
         //{
         //    var statsFile = System.IO.File.OpenRead("./stats.json");
@@ -41,11 +60,12 @@ public class GameStatsTrack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text_ref.text = "" + GameStats.Score;
+        scoreTextRef.text = "" + GameStats.Score;
     }
 
     private void OnDestroy()
     {
+        
         Debug.Log("Yes");
         if (!LoadStore.SaveData())
         {

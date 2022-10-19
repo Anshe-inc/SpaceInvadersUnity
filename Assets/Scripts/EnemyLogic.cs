@@ -70,7 +70,8 @@ public class EnemyLogic : MonoBehaviour
         frames_before_shooting--;
         if (enemyCount == 0)
         {
-            SceneManager.LoadScene("SampleScene");
+            LoadStore.SaveData();
+            SceneManager.LoadSceneAsync("Scenes/SampleScene", LoadSceneMode.Single);
         }
         if (frames_before_shooting < 1)
         {

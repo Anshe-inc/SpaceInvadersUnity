@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Wow! you've killed");
-        SceneManager.LoadScene("SampleScene");
+        
+
     }
 }

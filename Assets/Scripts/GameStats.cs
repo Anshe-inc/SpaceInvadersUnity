@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Object = System.Object;
+
+[CreateAssetMenu(fileName = "Scriptable Object", menuName = "Scriptable Object")]
 
 [System.Serializable]
-public class GameStats
+public class GameStats : ScriptableObject
 {
     public static GameStats Current;
     public static int Score;
