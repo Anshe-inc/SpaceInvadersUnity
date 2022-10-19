@@ -15,6 +15,7 @@ public class GameStats : ScriptableObject
     
     public int lives;
     public int hi_score;
+    public static float Speed = 1f;
 
     public static void AddScore(int score)
     {

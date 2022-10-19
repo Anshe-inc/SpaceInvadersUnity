@@ -12,7 +12,7 @@ using Vector3 = UnityEngine.Vector3;
 
 public class EnemyLogic : MonoBehaviour
 {
-    public float speed = 0.5f;
+    public float speed;
     public Vector3 borders = new Vector3(7, 0, 0);
     public float epsilon = 0.1f;
 
@@ -31,7 +31,7 @@ public class EnemyLogic : MonoBehaviour
 
     private void Awake()
     {
-
+        speed = 0.5f * GameStats.Speed;
         _direction = Vector3.left * 1 / 32f * speed;
     }
 
@@ -71,6 +71,7 @@ public class EnemyLogic : MonoBehaviour
         if (enemyCount == 0)
         {
             LoadStore.SaveData();
+            GameStats.Speed *= 1.01f;
             SceneManager.LoadSceneAsync("Scenes/SampleScene", LoadSceneMode.Single);
         }
         if (frames_before_shooting < 1)

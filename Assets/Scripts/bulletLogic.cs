@@ -38,8 +38,22 @@ public class bulletLogic : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider.name);
-        if (collider.CompareTag("Enemy"))
+        Debug.Log(collider.tag);
+        if (CompareTag("EnemyBullet"))
+        {
+            Debug.Log("Enemy shot");
+            if (collider.CompareTag("Player"))
+            {
+                Debug.Log("Wow! you've killed");
+                GameStats.Current.lives--;
+                if (GameStats.Current.lives < 0)
+                {
+                    GameStats.Current.lives = 5;
+                }
+                SceneManager.LoadSceneAsync("Scenes/SampleScene", LoadSceneMode.Single);
+            }
+        }
+        if (collider.CompareTag("Enemy") && !CompareTag("EnemyBullet"))
         {
             var gO = collider.gameObject;
             gO.GetComponentInChildren<Animator>().enabled = false;
@@ -60,20 +74,9 @@ public class bulletLogic : MonoBehaviour
             GameStats.AddScore(score);
             
         }
-
-        if (collider.CompareTag("Player"))
-        {
-            Debug.Log("Wow! you've killed");
-            GameStats.Current.lives--;
-            if (GameStats.Current.lives < 0)
-            {
-                GameStats.Current.lives = 5;
-            }
-            SceneManager.LoadSceneAsync("Scenes/SampleScene", LoadSceneMode.Single);
-        }
         GetComponent<AudioSource>().enabled = true;
         GetComponent<AudioSource>().Play();
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     } 
     
 }
